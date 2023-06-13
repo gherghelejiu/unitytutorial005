@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     Rigidbody rb;
+    AudioSource audioSource;
     [SerializeField] float thrustForceVariable = 2.5f;
     [SerializeField] float rotationSensitivity = 2.5f;
 
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,7 +28,21 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
+            if (audioSource.isPlaying)
+            {
+                // 
+            } else
+            {
+                audioSource.Play();
+            }
             rb.AddRelativeForce(0, thrustForceVariable * Time.deltaTime, 0);
+        } else
+        {
+            if (audioSource.isPlaying)
+            {
+                //
+                audioSource.Stop();
+            }
         }
     }
 
