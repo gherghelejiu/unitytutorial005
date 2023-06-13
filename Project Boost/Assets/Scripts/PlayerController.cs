@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
     [SerializeField] float thrustForceVariable = 2.5f;
+    [SerializeField] float rotationSensitivity = 2.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +35,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             // left 
-        } else if (Input.GetKey(KeyCode.D))
+            Rotate(rotationSensitivity);
+        }
+        else if (Input.GetKey(KeyCode.D))
         {
             // right 
+            Rotate(-rotationSensitivity);
         }
+    }
+
+    public void Rotate(float frameRotation)
+    {
+        rb.freezeRotation = true;
+        transform.Rotate(Vector3.forward * frameRotation * Time.deltaTime);
+        rb.freezeRotation = false;
     }
 }
