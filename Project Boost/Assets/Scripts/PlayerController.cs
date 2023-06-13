@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    Rigidbody rb;
-    AudioSource audioSource;
     [SerializeField] float thrustForceVariable = 2.5f;
     [SerializeField] float rotationSensitivity = 2.5f;
+    [SerializeField] AudioClip mainEngine;
+
+    Rigidbody rb;
+    AudioSource audioSource;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +36,7 @@ public class PlayerController : MonoBehaviour
                 // 
             } else
             {
-                audioSource.Play();
+                audioSource.PlayOneShot(mainEngine);
             }
             rb.AddRelativeForce(0, thrustForceVariable * Time.deltaTime, 0);
         } else
