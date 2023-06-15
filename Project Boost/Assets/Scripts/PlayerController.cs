@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float thrustForceVariable = 2.5f;
     [SerializeField] float rotationSensitivity = 2.5f;
     [SerializeField] AudioClip mainEngine;
+    [SerializeField] ParticleSystem leftJet;
+    [SerializeField] ParticleSystem rightJet;
+    [SerializeField] ParticleSystem mainJet;
 
     Rigidbody rb;
     AudioSource audioSource;
@@ -37,13 +40,14 @@ public class PlayerController : MonoBehaviour
             } else
             {
                 audioSource.PlayOneShot(mainEngine);
+                mainJet.Play();
             }
             rb.AddRelativeForce(0, thrustForceVariable * Time.deltaTime, 0);
         } else
         {
             if (audioSource.isPlaying)
             {
-                //
+                mainJet.Stop();
                 audioSource.Stop();
             }
         }
@@ -54,12 +58,25 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             // left 
+            if (!rightJet.isPlaying)
+            {
+                rightJet.Play();
+            }
             Rotate(rotationSensitivity);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             // right 
+            if (!leftJet.isPlaying)
+            {
+                leftJet.Play();
+            }
             Rotate(-rotationSensitivity);
+        }
+        else
+        {
+            rightJet.Stop();
+            leftJet.Stop();
         }
     }
 
